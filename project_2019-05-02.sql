@@ -7,7 +7,7 @@
 #
 # Host: dev.motoshare.nl (MySQL 5.7.25)
 # Database: project
-# Generation Time: 2019-05-02 16:44:30 +0000
+# Generation Time: 2019-05-02 17:23:19 +0000
 # ************************************************************
 
 
@@ -27,52 +27,9 @@ DROP TABLE IF EXISTS `course`;
 
 CREATE TABLE `course` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-
-# Dump of table message
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `message`;
-
-CREATE TABLE `message` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) unsigned NOT NULL,
-  `from_user_id` int(11) unsigned NOT NULL,
-  `to_user_id` int(11) unsigned NOT NULL,
-  `text` varchar(500) NOT NULL,
-  `craeted_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-
-# Dump of table order
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `order`;
-
-CREATE TABLE `order` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `course_id` int(11) unsigned NOT NULL,
-  `student_id` int(11) unsigned NOT NULL,
-  `created_at` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `order_ibfk_1` FOREIGN KEY (`id`) REFERENCES `course` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-
-# Dump of table user
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user`;
-
-CREATE TABLE `user` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `title` varchar(11) NOT NULL DEFAULT '',
+  `lessons_count` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
