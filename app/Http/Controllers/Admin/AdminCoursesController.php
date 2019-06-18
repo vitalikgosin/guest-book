@@ -72,9 +72,10 @@ class AdminCoursesController extends Controller
         // $post_data = Posts::create(['title' => $request->request->get('email'), 'postdata'=>$request->request->get('password')]);
         $course = new courses;
         $course->course_title = $validatedData['title'];
-        $course->course_description = $request->request->get('course_description'); // primer s get
+        $course->course_description = $request->request->get('course_description');
         $course->course_featured_img = $path?? NULL; //isset($path) ? $path : null
 
+        $course->published = $request->request->has('PublishCourse');
         $course->course_slug = $course->course_title;
         $course->course_author_id =  \Auth::id();
         $course->save();
