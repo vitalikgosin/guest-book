@@ -17,7 +17,7 @@
                             <a href="{{ @route('course', $course->course_slug)  }}">{{ $course->course_title }}</a>
                             by {{ $course->user->name }}
                             <p>
-                                {!! nl2br($course->course_description) !!}
+                                {!! nl2br(e($course->course_description)) !!}
                             </p>
                         </li>
                     @endforeach
