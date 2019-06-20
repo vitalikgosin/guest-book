@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class courses extends Model
 {
     public $table = "courses";
-
+    use SoftDeletes;
 
     public function user()
     {

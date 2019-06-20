@@ -62,10 +62,14 @@
                             <a id="delete_course_img" href="{{route('admin.deleteImg', $coursedata->course_slug)}}" >Delete Course Image</a>
 
                         </div>
-
+                        @if (old('published', $coursedata['published']) )
+                        $checked = true
+                        @endif
                         <div class="form-group form-check">
-                            <input name="checkbox" type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            <input name="PublishCourse" type="checkbox" class="form-check-input" id="exampleCheck1"
+                                 {{old('published', $coursedata['published']) ? 'checked':'' }}
+                            >
+                            <label class="form-check-label" for="exampleCheck1">Publish course</label>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -74,7 +78,7 @@
 
 
                 <div class="col-md-12 mr-sm-auto col-lg-12 px-4">
-                    <a href="{{route('admin.delete-post', $coursedata->slug)}}"><button type="submit" class="btn btn-danger">Delete Post</button></a>
+                    <a href="{{route('admin.delete-course', $coursedata->course_slug)}}"><button type="submit" class="btn btn-danger">Delete course</button></a>
 
                 </div>
             </div>
