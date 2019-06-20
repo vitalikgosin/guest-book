@@ -38,6 +38,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/edit-course-delete-img/{slug}', 'Admin\AdminCoursesController@deleteImg')->name('admin.deleteImg');
 
 
-    Route::get('admin/edit-course/{slug?}/delete', 'Admin\EditCourseController@delete')->name('admin.delete-post');
+    Route::get('admin/edit-course/{slug?}/delete', 'Admin\AdminCoursesController@delete')->name('admin.delete-course');
 
 });

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+
+
 use App\courses;
 
 class AdminCoursesController extends Controller
@@ -169,6 +171,8 @@ class AdminCoursesController extends Controller
         $coursedata->course_title=$validatedData['title'];
         $coursedata->course_description=$request->get('course_description');
 
+        $coursedata->published = $request->request->has('PublishCourse');
+
 
         $coursedata->course_slug = str_slug($coursedata->course_title);
 
@@ -217,4 +221,16 @@ class AdminCoursesController extends Controller
     {
         //
     }
+
+    public function delete(Request $request, $slug)
+    {
+        $coursedata = courses::where('course_slug', $slug) ->first();
+
+
+        $coursedata->delete();
+
+
+        return redirect(route('admin.courses'));
+    }
+
 }
