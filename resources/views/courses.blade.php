@@ -14,8 +14,8 @@
                                     <img src="{{Storage::url($course->course_featured_img ) }}" style="max-width: 200px;">
                                 </a>
                             @endif
-                                <a href="{{ @route('course', $course->course_slug)  }}">{{ $course->course_title }}</a>
-                                by {{ $course->user->name }}
+                            <a href="{{ @route('course', $course->course_slug)  }}">{{ $course->course_title }}</a>
+                            by {{ $course->user->name }}
                             <p>
                                 {!! nl2br($course->course_description) !!}
                             </p>
