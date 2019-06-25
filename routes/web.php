@@ -18,6 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/courses', 'CoursesController@index')->name('courses');
+Route::get('/course/{slug}', 'CourseController@index')->name('course');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('admin', 'Admin\AdminIndexController@index');
