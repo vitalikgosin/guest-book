@@ -22,6 +22,7 @@
                         </li>
                     @endforeach
                 </ul>
+                {{ $courses->onEachSide(1)->links() }}
             </div>
         </div>
     </div>

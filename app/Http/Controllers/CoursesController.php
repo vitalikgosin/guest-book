@@ -11,7 +11,10 @@ class CoursesController extends Controller
         $courses = courses::where('published', 1)
             ->orderByDesc('created_at')
             ->with('user')
-            ->get();
+
+            ->paginate(2);
+            //->withPath('custom/url');
+            //->simplePaginate(1);
         return view('courses', ['courses' => $courses]);
     }
 }
