@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\courses;
+use App\Course;
 
 class CourseController extends Controller
 {
     public function index($slug): \Illuminate\View\View
     {
 
-        $coursedata = courses::where('course_slug', $slug)
+        $coursedata = Course::where('course_slug', $slug)
             ->where('published', 1)
             ->with('user')
             ->first();

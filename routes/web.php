@@ -42,4 +42,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('admin/edit-course/{slug?}/delete', 'Admin\AdminCoursesController@delete')->name('admin.delete-course');
 
+    // course request
+
+    Route::get('admin/course-request/{slug}', 'CourseRequestController@index')->name('course-request');
+
+
 });

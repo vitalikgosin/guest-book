@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class courses extends Model
+class Course extends Model
 {
     public $table = "courses";
     use SoftDeletes;

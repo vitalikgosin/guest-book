@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 
 
-use App\courses;
+use App\Course;
 
 class AdminCoursesController extends Controller
 {
@@ -22,7 +22,7 @@ class AdminCoursesController extends Controller
 
 
         //dump($request);
-        $a = courses::where('course_author_id', \Auth::id())
+        $a = Course::where('course_author_id', \Auth::id())
             ->orderBy('course_title', 'desc')
             ->take(10)
             ->get();
@@ -72,7 +72,7 @@ class AdminCoursesController extends Controller
 
 
         // $post_data = Posts::create(['title' => $request->request->get('email'), 'postdata'=>$request->request->get('password')]);
-        $course = new courses;
+        $course = new Course;
         $course->course_title = $validatedData['title'];
         $course->course_description = $request->request->get('course_description');
         $course->course_featured_img = $path?? NULL; //isset($path) ? $path : null
@@ -117,7 +117,7 @@ class AdminCoursesController extends Controller
     {
 
 
-        $coursedata = courses::where('course_slug', $slug)
+        $coursedata = Course::where('course_slug', $slug)
             ->first();
 
         if(!$coursedata){
@@ -148,7 +148,7 @@ class AdminCoursesController extends Controller
         ]);
 
 
-        $coursedata = courses::where('course_slug', $slug)
+        $coursedata = Course::where('course_slug', $slug)
             ->first();
 
 
@@ -194,7 +194,7 @@ class AdminCoursesController extends Controller
 
     public function deleteImg($slug )
     {
-        $coursedata = courses::where('course_slug', $slug)
+        $coursedata = Course::where('course_slug', $slug)
             ->first();
 
 
@@ -224,7 +224,7 @@ class AdminCoursesController extends Controller
 
     public function delete(Request $request, $slug)
     {
-        $coursedata = courses::where('course_slug', $slug) ->first();
+        $coursedata = Course::where('course_slug', $slug) ->first();
 
 
         $coursedata->delete();

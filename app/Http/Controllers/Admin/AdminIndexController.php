@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\courses;
+use App\Course;
 use Illuminate\Http\Request;
 
 class AdminIndexController extends Controller
