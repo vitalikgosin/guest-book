@@ -32,10 +32,12 @@ class HomeController extends Controller
             ->take(10)
             ->get();
 
-        $courserequests_received = CourseRequest::where('course_id', \Auth::id())
-            ->orderByDesc('created_at')
-            ->take(10)
-            ->get();
+        $courserequests_received = CourseRequest::whereHas(
+            'course',
+            function ($query) {
+                $query->where('course_author_id', \Auth::id());
+            }
+        )->get();
 
 
 
