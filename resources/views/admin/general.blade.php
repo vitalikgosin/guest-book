@@ -19,7 +19,15 @@
 
         <div class="container">
             <div class="row">
-                <h5> content</h5>
+                <ul>
+                @foreach ($requests as $request)
+
+                        <li><a href="{{route('messages', $request['id'])}}">request </a></li>
+                    <li>{{$request['request_status']}}</li>
+                @endforeach
+                </ul>
+
+
 
             </div>
         </div>

@@ -33,9 +33,10 @@ class CourseRequestController extends Controller
 
 
         $request_message = new Message;
-        //dd($request_message);
         $request_message->request_id = $course_request->id;
-        $request_message->message = $request->input('message');
+        $request_message->user_id =  \Auth::id();
+        //$request_message->message = $request->input('message'); //- method get
+        $request_message->message = $request->request->get('message'); //--- method post
         $request_message->save();
 
 

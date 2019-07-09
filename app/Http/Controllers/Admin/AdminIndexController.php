@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Course;
+use App\CourseRequest;
 use Illuminate\Http\Request;
 
 class AdminIndexController extends Controller
@@ -16,13 +16,17 @@ class AdminIndexController extends Controller
     public function index()
     {
 
+        $courserequests = CourseRequest::where('user_id', \Auth::id())
+            ->orderByDesc('created_at')
+            ->take(10)
+            ->get();
 
-        //$a = Posts::all();
-        //$plucked = $a->pluck('text');
-        //return $a;
-        $b = 'aaa';
-        // dump($b);
-        return view('admin.general', ['b' => $b]);
+        //->withPath('custom/url');
+        //->simplePaginate(1);
+        //$requests = $courserequests->toArray();
+
+        return view('admin.general', ['requests' =>  $courserequests]);
+        //return view('admin.general', ['b' => $b]);
 
 
     }

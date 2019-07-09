@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'Admin\HomeController@index')->name('home');
 Route::get('/courses', 'CoursesController@index')->name('courses');
 Route::get('/course/{slug}', 'CourseController@index')->name('course');
 
@@ -25,6 +25,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin', 'Admin\AdminIndexController@index');
 
 
+    Route::get('admin/home', 'Admin\HomeController@index')->name('home');
+    Route::get('admin/messages{request_id}', 'Admin\HomeController@messages')->name('messages');
     //---------------------------------------------------------courses
 
     Route::get('admin/courses', 'Admin\AdminCoursesController@index')->name('admin.courses');
