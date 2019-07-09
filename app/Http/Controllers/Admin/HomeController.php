@@ -53,10 +53,17 @@ class HomeController extends Controller
     }
     public function messages($request_id)
     {
-        if(CourseRequest::find($request_id)->user_id != \Auth::id()){
-
+        $course_request = CourseRequest::find($request_id);
+        if(
+            $course_request->user_id != \Auth::id() // не подходит отправитель
+            && // и
+            $course_request->course->course_author_id != \Auth::id() // не подходит получатель
+        ){
+            // если не подходит ни тот, ни другой - показываем 404
             abort(404);
         }
+
+        // раз сюда дошли - значит подходит
 
         $coursemessages = Message::where('request_id', $request_id)
         ->orderByDesc('created_at')
