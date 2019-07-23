@@ -31,9 +31,9 @@
 
                 <div class="col-md-12">
 
-                    @if(Auth::user())
 
-                        <form action="{{}}" method="get">
+
+                        <form action="{{route('course-request-message', $course_request->id)}}" method="post">
                             @csrf
 
                             <div class="form-group">
@@ -45,7 +45,34 @@
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                 </div>
+
+                @if($course_request->request_status == 'open')
+
+                    @if($course_request->course->course_author_id != Auth::id())
+                <form action="{{route('start-training', $course_request->id)}}" method="post">
+                    @csrf
+
+
+                    <button type="submit" class="btn btn-primary">Start Training</button>
+                </form>
+                    @endif
+
+                    <form action="{{route('close-request', $course_request->id )}}" method="post">
+                        @csrf
+
+                        <br>
+
+                        <button type="submit" class="btn ">Close request</button>
+                    </form>
                 @endif
+
+                @if($course_request->request_status== 'activated')
+
+                    <a class="btn " href="{{route('admin.course-review',  $course_request->id)}}">leave feedback</a>
+
+                @endif
+
+
 
 
 

@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('admin/home', 'Admin\HomeController@index')->name('home');
-    Route::get('admin/messages{request_id}', 'Admin\HomeController@messages')->name('messages');
+    Route::get('admin/messages/{request_id}', 'Admin\MessagesController@messages')->name('messages');
     //---------------------------------------------------------courses
 
     Route::get('admin/courses', 'Admin\AdminCoursesController@index')->name('admin.courses');
@@ -46,7 +46,17 @@ Route::group(['middleware' => 'auth'], function () {
 
     // course request
 
-    Route::get('admin/course-request/{slug}', 'CourseRequestController@index')->name('course-request');
+    Route::get('admin/course-request/{id}', 'Admin\CourseRequestController@index')->name('course-request');
+
+    Route::post('admin/course-request-message/{request_id}', 'Admin\CourseRequestMessageController@index')->name('course-request-message');
+
+    Route::post('admin/start-training/{request_id}', 'Admin\StartTrainingController@index')->name('start-training');
+    Route::post('admin/close-request/{request_id}', 'Admin\CloseRequestController@index')->name('close-request');
+
+    //reviews
+    Route::get('admin/course-review-message/{request_id}', 'Admin\ReviewController@index')->name('admin.course-review');
+
+    Route::post('admin/course-review-message/{request_id}', 'Admin\ReviewController@addReview')->name('admin.add-review');
 
 
 });

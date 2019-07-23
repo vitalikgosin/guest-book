@@ -19,6 +19,8 @@
 
         <div class="container">
             <div class="row">
+                <div class="col">
+                    <h3>Your requests  </h3>
                 <ul>
                 @foreach ($requests as $request)
 
@@ -26,9 +28,19 @@
                     <li>{{$request['request_status']}}</li>
                 @endforeach
                 </ul>
+              </div>
+                <div class="col">
+                    <h3>Requests received </h3>
 
+                    <ul>
+                        @foreach ($courserequests_received as $request_received)
 
+                            <li><a href="{{route('messages', $request_received['id'])}}">request </a></li>
+                            <li>{{$request_received['request_status']}}</li>
+                        @endforeach
+                    </ul>
 
+                </div>
             </div>
         </div>
 

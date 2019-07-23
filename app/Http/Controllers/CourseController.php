@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Review;
 
 class CourseController extends Controller
 {
@@ -14,9 +15,22 @@ class CourseController extends Controller
             ->with('user')
             ->first();
 
+
+
         if(!$coursedata){ abort(404);}
 
-        return view('course', ['coursedata'=> $coursedata]);
+
+        $reviews = Review::where('course_id', $coursedata->id)
+            ->orderByDesc('created_at')
+            ->with('user')
+            //->get();
+            ->paginate(10);
+
+
+     //dd($reviews->user_id);
+
+
+        return view('course', ['coursedata'=> $coursedata, 'reviews' =>  $reviews ]);
 
 
     }

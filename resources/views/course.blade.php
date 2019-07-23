@@ -32,6 +32,43 @@
 
 
                 </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 > Course Reviews </h2>
+                    </div>
+
+                    @foreach ($reviews as $review)
+
+                    <div class="container p-3">
+
+                        <h3>by {{  $review->user->name }}</h3>
+                        <div class="course-desc">
+                            <ul>
+                                <li>
+
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="rating">
+                                                @for( $i =1;  $i <= $review->review_score; $i++)
+                                                <input type="radio" id="star10" name="rating" value="{{$i}}" /><label for="star" title="star">star</label>
+                                                 @endfor
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+
+
+
+                                </li>
+                                <li>  {{ nl2br(e($review->review)) }}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    @endforeach
+
+
+                </div>
             </div>
             <div class="col-md-4">
 
