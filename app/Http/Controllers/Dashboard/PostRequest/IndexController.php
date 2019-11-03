@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Dashboard\PostRequest;
 
-use App\CourseRequest;
+use App\PostRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class IndexController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,20 +26,20 @@ class HomeController extends Controller
     public function index()
     {
 
-        $courserequests = CourseRequest::where('user_id', \Auth::id())
+        $postrequests = PostRequest::where('user_id', \Auth::id())
             ->orderByDesc('created_at')
             ->take(10)
             ->get();
 
-        $courserequests_received = CourseRequest::whereHas(
-            'course',
+        $postrequests_received = PostRequest::whereHas(
+            'post',
             function ($query) {
-                $query->where('course_author_id', \Auth::id());
+                $query->where('post_author_id', \Auth::id());
             }
         )->get();
 
 
-        return view('admin.general', ['requests' =>  $courserequests,'courserequests_received' => $courserequests_received]);
+        return view('dashboard.requests', ['requests' =>  $postrequests,'postrequests_received' => $postrequests_received]);
 
 
 

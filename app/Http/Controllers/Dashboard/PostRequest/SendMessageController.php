@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Dashboard\PostRequest;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-use App\CourseRequest;
-use App\Course;
+use App\PostRequest;
+use App\Post;
 use App\Message;
 
 
-class CourseRequestMessageController extends Controller
+class SendMessageController extends Controller
 {
     public function index(Request $request, $request_id)
     {
 
-        $course_request = CourseRequest::find($request_id);
+        $post_request = PostRequest::find($request_id);
 
         if(
-            $course_request->user_id != \Auth::id() // не подходит отправитель
+            $post_request->user_id != \Auth::id() // не подходит отправитель
             && // и
-            $course_request->course->course_author_id != \Auth::id() // не подходит получатель
+            $post_request->post->post_author_id != \Auth::id() // не подходит получатель
         ){
             // если не подходит ни тот, ни другой - показываем 404
             abort(404);
@@ -40,7 +40,7 @@ class CourseRequestMessageController extends Controller
 
 
 
-        return redirect(route('messages',[$request_id]));
+        return redirect(route('dashboard.messages',[$request_id]));
     }
 
 

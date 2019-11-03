@@ -20,6 +20,8 @@ class CourseController extends Controller
         if(!$coursedata){ abort(404);}
 
 
+
+
         $reviews = Review::where('course_id', $coursedata->id)
             ->orderByDesc('created_at')
             ->with('user')
@@ -27,10 +29,13 @@ class CourseController extends Controller
             ->paginate(10);
 
 
-     //dd($reviews->user_id);
 
 
-        return view('course', ['coursedata'=> $coursedata, 'reviews' =>  $reviews ]);
+        $value = Review::where('course_id', $coursedata->id);
+        $reviews_avg =$value->avg('review_score');
+
+
+        return view('course', ['coursedata'=> $coursedata, 'reviews' =>  $reviews,'reviews_avg'=> $reviews_avg ]);
 
 
     }

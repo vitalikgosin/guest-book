@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Dashboard\Posts;
+use App\Http\Controllers\Dashboard\Modelname;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -8,9 +9,9 @@ use Illuminate\Support\Str;
 
 
 
-use App\Course;
+use App\Post;
 
-class AdminCoursesController extends Controller
+class IndexController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,8 +23,8 @@ class AdminCoursesController extends Controller
 
 
         //dump($request);
-        $a = Course::where('course_author_id', \Auth::id())
-            ->orderBy('course_title', 'desc')
+        $a = Post::where('post_author_id', \Auth::id())
+            ->orderBy('post_title', 'desc')
             ->take(10)
             ->get();
 
@@ -32,7 +33,7 @@ class AdminCoursesController extends Controller
 
         $b = $a->toArray();
 
-        return view('admin.courses', ['b'=> $a]);
+        return view('dashboard.posts', ['b'=> $a]);
         //return view('test', ['a' => $request->input('a'), 'b' =>  $a, 'd' => $plucked]);
 
 
@@ -46,7 +47,7 @@ class AdminCoursesController extends Controller
      */
     public function create_form()
     {
-        return view('admin.add-course');
+        return view('dashboard.add-post');
     }
 
     /**
@@ -72,16 +73,16 @@ class AdminCoursesController extends Controller
 
 
         // $post_data = Posts::create(['title' => $request->request->get('email'), 'postdata'=>$request->request->get('password')]);
-        $course = new Course;
-        $course->course_title = $validatedData['title'];
-        $course->course_description = $request->request->get('course_description');
-        $course->course_featured_img = $path?? NULL; //isset($path) ? $path : null
+        $post = new Post;
+        $post->post_title = $validatedData['title'];
+        $post->post_description = $request->request->get('post_description');
+        $post->post_featured_img = $path?? NULL; //isset($path) ? $path : null
 
-        $course->published = $request->request->has('PublishCourse');
-        $course->course_slug = $course->course_title;
-        $course->course_author_id =  \Auth::id();
-        $course->save();
-        return redirect(route('admin.courses'));
+        $post->published = $request->request->has('PublishPost');
+        $post->post_slug = $post->post_title;
+        $post->post_author_id =  \Auth::id();
+        $post->save();
+        return redirect(route('dashboard.posts'));
     }
 
 
@@ -117,16 +118,16 @@ class AdminCoursesController extends Controller
     {
 
 
-        $coursedata = Course::where('course_slug', $slug)
+        $postdata = Post::where('post_slug', $slug)
             ->first();
 
-        if(!$coursedata){
+        if(!$postdata){
 
             abort(404);
         }
 
         // dump($b);
-      return view('admin.edit-course', ['coursedata'=> $coursedata]);
+      return view('dashboard.edit-post', ['postdata'=> $postdata]);
 
     }
 
@@ -148,40 +149,40 @@ class AdminCoursesController extends Controller
         ]);
 
 
-        $coursedata = Course::where('course_slug', $slug)
+        $postdata = Post::where('post_slug', $slug)
             ->first();
 
 
         if($request->hasFile('add_img')){
 
-            if ($coursedata->course_featured_img){
+            if ($postdata->post_featured_img){
 
-                \Storage::delete('public/'.$coursedata->course_featured_img);
+                \Storage::delete('public/'.$postdata->post_featured_img);
             }
 
 
             $path = $request->file('add_img')->hashName();
             $request->file('add_img')->storeAs('public', $path);
 
-            $coursedata->course_featured_img = $path;
+            $postdata->post_featured_img = $path;
 
         }
 
 
-        $coursedata->course_title=$validatedData['title'];
-        $coursedata->course_description=$request->get('course_description');
+        $postdata->post_title=$validatedData['title'];
+        $postdata->post_description=$request->get('post_description');
 
-        $coursedata->published = $request->request->has('PublishCourse');
+        $postdata->published = $request->request->has('PublishPost');
 
 
-        $coursedata->course_slug = str_slug($coursedata->course_title);
+        $postdata->post_slug = str_slug($postdata->post_title);
 
         // sdelat izmenenie slug
         // validaciju na formu redaktirovanija
 
-        $coursedata->save();
+        $postdata->save();
 
-        return redirect(route('admin.courses'));
+        return redirect(route('dashboard.posts'));
     }
 
     /**
@@ -194,20 +195,20 @@ class AdminCoursesController extends Controller
 
     public function deleteImg($slug )
     {
-        $coursedata = Course::where('course_slug', $slug)
+        $postdata = Post::where('post_slug', $slug)
             ->first();
 
 
 
 
-            if ($coursedata->course_featured_img){
+            if ($postdata->post_featured_img){
 
-                \Storage::delete('public/'.$coursedata->course_featured_img);
+                \Storage::delete('public/'.$postdata->post_featured_img);
             }
-        $coursedata->course_featured_img = NULL;
-        $coursedata->save();
+        $postdata->post_featured_img = NULL;
+        $postdata->save();
 
-       // return redirect(route('admin.edit-course', [$slug]));
+       // return redirect(route('dashboard.edit-post', [$slug]));
 
     }
 
@@ -224,13 +225,13 @@ class AdminCoursesController extends Controller
 
     public function delete(Request $request, $slug)
     {
-        $coursedata = Course::where('course_slug', $slug) ->first();
+        $postdata = Post::where('post_slug', $slug) ->first();
 
 
-        $coursedata->delete();
+        $postdata->delete();
 
 
-        return redirect(route('admin.courses'));
+        return redirect(route('dashboard.posts'));
     }
 
 }

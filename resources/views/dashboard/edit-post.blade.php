@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('dashboard.layout')
 
 @section('content')
 
@@ -29,16 +29,16 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="{{route('admin.update-course', $coursedata->course_slug)}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('dashboard.update-post', $postdata->post_slug)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="CourseTitle">Course Title</label>
-                            <input type="text" name="title" class="form-control" id="posttitle" aria-describedby="emailHelp" placeholder="Enter title" value="{{old('course_title', $coursedata['course_title']) }}">
+                            <input type="text" name="title" class="form-control" id="posttitle" aria-describedby="emailHelp" placeholder="Enter title" value="{{old('post_title', $postdata['post_title']) }}">
 
                             <small id="emailHelp" class="form-text text-muted">Course title</small>
-                            @if ($errors->get('course_title'))
+                            @if ($errors->get('post_title'))
                                 <ol>
-                                    @foreach ($errors->get('course_title') as $error)
+                                    @foreach ($errors->get('post_title') as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach
                                 </ol>
@@ -48,7 +48,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">With textarea</span>
                             </div>
-                            <textarea name="course_description" class="form-control" aria-label="With textarea">{{old('course_description', $coursedata['course_description']) }}</textarea>
+                            <textarea name="post_description" class="form-control" aria-label="With textarea">{{old('post_description', $postdata['post_description']) }}</textarea>
                         </div>
                         <br>
                         <div class="custom-file">
@@ -57,19 +57,19 @@
                         </div>
                         <div class="col-md-4 mr-sm-auto col-lg-4 px-4">
 
-                            <img  class="img-fluid admin_course_img" alt="Responsive image"  src="{{Storage::url($coursedata->course_featured_img ) }}"/>
+                            <img  class="img-fluid admin_post_img" alt="Responsive image"  src="{{Storage::url($postdata->post_featured_img ) }}"/>
 
-                            <a id="delete_course_img" href="{{route('admin.deleteImg', $coursedata->course_slug)}}" >Delete Course Image</a>
+                            <a id="delete_post_img" href="{{route('dashboard.deleteImg', $postdata->post_slug)}}" >Delete Course Image</a>
 
                         </div>
-                        @if (old('published', $coursedata['published']) )
+                        @if (old('published', $postdata['published']) )
                         $checked = true
                         @endif
                         <div class="form-group form-check">
                             <input name="PublishCourse" type="checkbox" class="form-check-input" id="exampleCheck1"
-                                 {{old('published', $coursedata['published']) ? 'checked':'' }}
+                                 {{old('published', $postdata['published']) ? 'checked':'' }}
                             >
-                            <label class="form-check-label" for="exampleCheck1">Publish course</label>
+                            <label class="form-check-label" for="exampleCheck1">Publish post</label>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -78,7 +78,7 @@
 
 
                 <div class="col-md-12 mr-sm-auto col-lg-12 px-4">
-                    <a href="{{route('admin.delete-course', $coursedata->course_slug)}}"><button type="submit" class="btn btn-danger">Delete course</button></a>
+                    <a href="{{route('dashboard.delete-post', $postdata->post_slug)}}"><button type="submit" class="btn btn-danger">Delete post</button></a>
 
                 </div>
             </div>
@@ -98,7 +98,7 @@
 
             });
 
-            $("#delete_course_img").click(function (event) {
+            $("#delete_post_img").click(function (event) {
 
                 event.preventDefault();
 
@@ -107,7 +107,7 @@
 
                     type: "POST",
 
-                    url: "{{route('admin.deleteImg', $coursedata->course_slug)}}"
+                    url: "{{route('dashboard.deleteImg', $postdata->post_slug)}}"
 
 
                 }).done(function (msg) {

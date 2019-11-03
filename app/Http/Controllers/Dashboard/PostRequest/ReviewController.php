@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Dashboard\PostRequest;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-use App\CourseRequest;
+use App\PostRequest;
 use App\Review;
 use App\Message;
 
@@ -17,16 +17,16 @@ class ReviewController extends Controller
 
 
 
-        $course_request = CourseRequest::find($request_id);
+        $post_request = PostRequest::find($request_id);
 
         if(
-            $course_request->user_id != \Auth::id() // не подходит отправитель
+            $post_request->user_id != \Auth::id() // не подходит отправитель
          ){
             // если не подходит ни тот, ни другой - показываем 404
             abort(404);
         }
 
-        return view('admin.review', ['course_request' => $course_request]);
+        return view('dashboard.review', ['post_request' => $post_request]);
 
     }
 
@@ -44,7 +44,7 @@ class ReviewController extends Controller
 
         ]);
 
-        $course_request = CourseRequest::find($request_id);
+        $post_request = PostRequest::find($request_id);
 
 
 
@@ -60,15 +60,15 @@ class ReviewController extends Controller
         $review->user_id = \Auth::id();
 
 
-        $review->course_request_id = $request_id;
+        $review->post_request_id = $request_id;
 
 
-       $review->course_id = $course_request->course_id;
+       $review->post_id = $post_request->post_id;
 
-       $review->course_author_id =  $course_request->course->course_author_id;
+       $review->post_author_id =  $post_request->post->post_author_id;
 
         $review->save();
-        return redirect(route('home'));
+        return redirect(route('dashboard.post-requests'));
     }
 
 

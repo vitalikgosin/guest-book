@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CourseRequest extends Model
+class PostRequest extends Model
 {
     public $table = "requests";
     //use SoftDeletes;
@@ -16,9 +16,9 @@ class CourseRequest extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function course()
+    public function post()
     {
-        return $this->belongsTo(Course::class, 'course_id', 'id');
+        return $this->belongsTo(Post::class, 'post_id', 'id');
     }
 
 }
