@@ -16,8 +16,8 @@ class Review extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function course_request()
-    {
-        return $this->belongsTo(Review::class, 'request_id', 'id');
-    }
+//    public function post()
+//    {
+//        return $this->belongsTo(Post::class, 'post_id', 'id');
+//    }
 }

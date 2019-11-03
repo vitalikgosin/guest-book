@@ -54,7 +54,7 @@
                         </div>
 
                         <div class="form-group form-check">
-                            <input name="PublishCourse" type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <input name="PublishPost" type="checkbox" class="form-check-input" id="exampleCheck1">
                             <label class="form-check-label" for="exampleCheck1">Publish post</label>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>

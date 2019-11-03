@@ -20,12 +20,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table course
+# Dump of table post
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `course`;
+DROP TABLE IF EXISTS `post`;
 
-CREATE TABLE `course` (
+CREATE TABLE `post` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `title` varchar(11) NOT NULL DEFAULT '',

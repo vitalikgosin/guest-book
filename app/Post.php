@@ -15,4 +15,8 @@ class Post extends Model
         // https://laravel.com/docs/5.7/eloquent-relationships#defining-relationships
         return $this->belongsTo(User::class, 'post_author_id', 'id');
     }
+    public function review()
+    {
+        return $this->belongsTo(Review::class, 'post_id', 'id');
+    }
 }

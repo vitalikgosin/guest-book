@@ -45,11 +45,19 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
-                    @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('posts') }}">{{ __('Posts') }}</a>
+                    </li>
+
+                @guest
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('posts') }}">{{ __('Posts') }}</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
@@ -86,7 +94,7 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link " href="/admin">
+                        <a class="nav-link " href="/dashboard">
                             <span data-feather="home"></span>
                             Dashboard <span class="sr-only">(current)</span>
                         </a>
@@ -94,12 +102,12 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-fw fa-folder"></i>
-                            <span>My Cources</span>
+                            <span>My Posts</span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="pagesDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(5px, 56px, 0px);">
-                            <a class="dropdown-item" href="http://codecoach.test/admin/courses">Courses</a>
-                            <a class="dropdown-item" href="http://codecoach.test/admin/add-course">Add New Course</a>
-                            <a class="dropdown-item" href="/category">Categories</a>
+                            <a class="dropdown-item" href="{{ url('/') }}/dashboard/posts">Posts</a>
+                            <a class="dropdown-item" href="{{ url('/') }}/dashboard/add-post">Add New Post</a>
+
 
                         </div>
                     </li>
@@ -111,9 +119,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="http://codecoach.test/dashboard/postrequests">
+                            <span data-feather="bar-chart-2"></span>
+                            You requests
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="bar-chart-2"></span>
-                            Contacts
+                            Support
                         </a>
                     </li>
                 </ul>

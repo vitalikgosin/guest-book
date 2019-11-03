@@ -8,23 +8,24 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h1 >{{ $coursedata->course_title }}</h1>
+
+                        <h1 >{{ $user_data->name }}</h1>
                     </div>
 
 
                             <div class="container-fluid">
                                 <div class="row">
-                                <div class="course-main-img">
-                                @if ($coursedata->course_featured_img)
-                                    <a href="{{ @route('course', $coursedata->course_slug)  }}">
-                                        <img src="{{Storage::url($coursedata->course_featured_img ) }}" class="img-fluid">
+                                <div class="post-main-img">
+                                @if ($user_data->user_img)
+                                    <a href="{{ @route('post', $user_data->post_slug)  }}">
+                                        <img src="{{Storage::url($user_data->post_featured_img ) }}" class="img-fluid">
                                     </a>
                                 @endif
                                 </div>
                                 <div class="container p-3">
-                                <h3>by {{ $coursedata->user->name }}</h3>
-                                 <div class="course-desc">
-                                {!! nl2br(e($coursedata->course_description)) !!}
+                                <h3>by {{ $user_data->email }}</h3>
+                                 <div class="post-desc">
+                                about Author
                                  </div>
                                     </div>
                             </div>
@@ -34,22 +35,13 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h2 > Course Reviews </h2>
+                        <h2 > Author Average Review </h2>
                     </div>
-
-                    @foreach ($reviews as $review)
-
-                    <div class="container p-3">
-
-                        <h3>by {{  $review->user->name }}</h3>
-                        <div class="course-desc">
-                            <ul>
-                                <li>
 
                                     <div class="container">
                                         <div class="row">
                                             <div class="rating">
-                                                @for( $i =1;  $i <= $review->review_score; $i++)
+                                                @for( $i =1;  $i <= $reviews_val; $i++)
                                                 <input type="radio" id="star10" name="rating" value="{{$i}}" /><label for="star" title="star">star</label>
                                                  @endfor
                                             </div>
@@ -59,35 +51,13 @@
 
 
 
-                                </li>
-                                <li>  {{ nl2br(e($review->review)) }}</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    @endforeach
-
-
                 </div>
             </div>
-            <div class="col-md-4">
+    <div class="col-md-4">
 
-                @if(Auth::user())
 
-                <form action="{{route('course-request', $coursedata->course_slug)}}" method="get">
-                    @csrf
 
-                    <div class="form-group">
-                        <label for="message">Type you message</label>
-                        <textarea name="message" class="form-control" aria-label="With textarea" rows="4">request</textarea>
-                    </div>
-                    <br>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-
-            @else
 
                 <div class="card-body loginform">
                     <form method="POST" action="{{ route('login') }}">
@@ -214,7 +184,7 @@
                     </form>
                 </div>
 
-            @endif
+
         </div>
     </div>
 

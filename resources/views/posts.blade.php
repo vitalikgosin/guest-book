@@ -9,6 +9,9 @@
                 <ul class="posts-list">
 
                     @foreach ($posts as $post)
+
+
+
                         <li>
                             @if ($post->post_featured_img)
                                 <a href="{{ @route('post', $post->post_slug)  }}">
@@ -21,22 +24,24 @@
                                 {!! nl2br(e($post->post_description)) !!}
                             </p>
                         </li>
+
+
                         <div class="card">
                             <div class="card-header">
-                                <h2 > Course Average Review </h2>
+                                <h2 > Post Reviews </h2>
                             </div>
+                            @if ($post->review != "")
 
-                            <div class="container">
-                                <div class="row">
-                                    <div class="rating">
-                                        @for( $i =1;  $i <= $post->getAttributes()['AVG( reviews.review_score )']; $i++)
+                                @foreach(explode(',', $post->review) as $review)
 
-                                            <input type="radio" id="star10" name="rating" value="{{$i}}" /><label for="star" title="star">star</label>
-                                        @endfor
-                                    </div>
-                                </div>
-                            </div>
+                                    <option>{{$review}}</option>
+
+                                @endforeach
+                            @endif
+
+
                         </div>
+
                     @endforeach
                 </ul>
                 {{ $posts->onEachSide(1)->links() }}

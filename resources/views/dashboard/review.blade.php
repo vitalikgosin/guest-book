@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('dashboard.layout')
 
 @section('content')
 
@@ -15,7 +15,7 @@
 
 
 
-                        <form action="{{route('admin.add-review', $course_request->id)}}" method="post" >
+                        <form action="{{route('dashboard.add-review', $post_request->id)}}" method="post" >
                             @csrf
 
                             <div class="container">

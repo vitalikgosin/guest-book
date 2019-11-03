@@ -34,29 +34,11 @@
 
                 </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <h2 > Course Average Review </h2>
-                    </div>
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="rating">
-                                @for( $i =1;  $i <= $reviews_avg; $i++)
-                                    <input type="radio" id="star10" name="rating" value="{{$i}}" /><label for="star" title="star">star</label>
-                                @endfor
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-
-
-
-                </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h2 > Course Reviews </h2>
+                        <h2 > Post Reviews </h2>
                     </div>
 
                     @foreach ($reviews as $review)
@@ -96,17 +78,36 @@
 
                 @if(Auth::user())
 
-                <form action="{{route('dashboard.post-request', $postdata->post_slug)}}" method="get">
-                    @csrf
+                    <div class="container">
+                        <div class="row">
 
-                    <div class="form-group">
-                        <label for="message">Type you message</label>
-                        <textarea name="message" class="form-control" aria-label="With textarea" rows="4">request</textarea>
+                            <div class="col-md-12">
+
+
+
+                                <form action="{{route('dashboard.add-review', $postdata->id)}}" method="post" >
+                                    @csrf
+
+
+
+                                    <div class="form-group">
+                                        <label for="review_message">Type you message</label>
+                                        <textarea name="review_message" class="form-control" aria-label="With textarea" rows="4" placeholder="type new message"></textarea>
+                                    </div>
+                                    <br>
+
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+
+
+
+
+
+
+                        </div>
                     </div>
-                    <br>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
             </div>
 
             @else

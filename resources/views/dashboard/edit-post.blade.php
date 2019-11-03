@@ -63,7 +63,7 @@
 
                         </div>
                         @if (old('published', $postdata['published']) )
-                        $checked = true
+
                         @endif
                         <div class="form-group form-check">
                             <input name="PublishCourse" type="checkbox" class="form-check-input" id="exampleCheck1"

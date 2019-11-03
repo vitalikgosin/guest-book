@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\CourseRequest;
+use App\PostRequest;
 use Illuminate\Http\Request;
 
-class AdminIndexController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,17 +16,22 @@ class AdminIndexController extends Controller
     public function index()
     {
 
-        $courserequests = CourseRequest::where('user_id', \Auth::id())
+        $postrequests = PostRequest::where('user_id', \Auth::id())
             ->orderByDesc('created_at')
             ->take(10)
             ->get();
 
-        //->withPath('custom/url');
-        //->simplePaginate(1);
-        //$requests = $courserequests->toArray();
+        $postrequests_received = PostRequest::whereHas(
+            'post',
+            function ($query) {
+                $query->where('post_author_id', \Auth::id());
+            }
+        )->get();
 
-        return view('admin.general', ['requests' =>  $courserequests]);
-        //return view('admin.general', ['b' => $b]);
+
+        return view('dashboard.general', ['requests' =>  $postrequests,'postrequests_received' => $postrequests_received]);
+
+
 
 
     }

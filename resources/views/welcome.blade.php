@@ -67,7 +67,11 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('posts') }}">{{ __('Posts') }}</a>
+                    </li>
                     @auth
+
                         <a href="{{ url('/home') }}">Home</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>

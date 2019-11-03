@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+use App\Review;
+use App\User;
 
-class CoursesController extends Controller
+class AuthorController extends Controller
 {
-    public function index(): \Illuminate\View\View
+    public function index($userid): \Illuminate\View\View
     {
 
-        $courses = Course::where('published', 1)
-            ->orderByDesc('created_at')
-            ->with('user')
+        $user_data = User::where('id', $userid)
+            ->first();
 
-            ->paginate(2);
 
-            //->withPath('custom/url');
-            //->simplePaginate(1);
-        return view('courses', ['courses' => $courses]);
+        if(!$user_data){ abort(404);}
+
+        //Select AVG(review_score) FROM reviews where post_id = 1
+
+        $value = Review::where('post_author_id', $userid);
+        $reviews_val =$value->avg('review_score');
+
+
+        return view('author', ['user_data' => $user_data, 'reviews_val' =>  $reviews_val]);
     }
 }

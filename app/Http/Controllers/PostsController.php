@@ -2,48 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+use App\Post;
 use DB;
+use App\Review;
 
-class CoursesController extends Controller
+class PostsController extends Controller
 {
     public function index(): \Illuminate\View\View
     {
 
-        //Select courses.*, AVG(reviews.review_score) from `courses` JOIN `reviews` on courses.`course_author_id` = reviews.`course_author_id`  where published = 1 Group by courses.id
-        /*
-                $reviews_avg  = DB::table('courses')
-                    ->select(array( 'courses.*' DB::raw( 'AVG( reviews.review_score )' )))
-            ->join('reviews', 'courses.course_author_id', '=', 'reviews.course_author_id')
-            ->where('published', '=', 1)
 
 
-            ->groupBy('courses.id')
-            //->avg('reviews.review_score');
-        ->get();
-        */
-        $avg = 'AVG( reviews.review_score )';
-        $courses = Course::where('published', '=', 1)
+        $posts = Post::where('published', '=', 1)
+
+            //->with('review')
+
+            ->leftJoin('reviews', 'posts.id', '=', 'reviews.post_id')
+            ->select('posts.*', DB::raw('GROUP_CONCAT(review) AS review'))
+           ->groupBy('posts.id', 'reviews.post_id')
             ->with('user')
-            ->leftJoin('reviews', 'courses.id', '=', 'reviews.course_id')
-            ->select('courses.*', DB::raw( $avg ))
-            ->groupBy('courses.id')
+            ->with('review')
+           // ->get();
+           // ->orderByDesc('created_at')
+           ->paginate(25);
 
-            //->get();
-            ->orderByDesc('created_at')
-            ->paginate(2);
+        $posts1 = DB::table('posts')
+
+            ->leftjoin('reviews', 'posts.id', '=', 'reviews.post_id')
+           // ->with('user')
+            ->select('posts.*', DB::raw('GROUP_CONCAT(review) AS review'))
+            ->groupBy('posts.id', 'reviews.post_id')
+            ->get();
 
 
 
-/*
-        $courses = Course::where('published', 1)
-            ->orderByDesc('created_at')
-            ->with('user')
+//dd($posts1);
+//        $posts = Post::where('published', 1)
+//            ->orderByDesc('created_at')
+//            ->with('user')
+//
+//            ->paginate(20);
 
-            ->paginate(2);
-*/
+
+
             //->withPath('custom/url');
             //->simplePaginate(1);
-        return view('courses', ['courses' => $courses]);
+        return view('posts', ['posts' => $posts]);
     }
 }

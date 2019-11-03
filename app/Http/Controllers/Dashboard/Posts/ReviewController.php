@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\PostRequest;
+namespace App\Http\Controllers\Dashboard\Posts;
+
+
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-use App\PostRequest;
+use App\Post;
 use App\Review;
 use App\Message;
 
@@ -13,22 +15,22 @@ use App\Message;
 class ReviewController extends Controller
 {
     public function index(Request $request, $request_id)
-    {
-
-
-
-        $post_request = PostRequest::find($request_id);
-
-        if(
-            $post_request->user_id != \Auth::id() // не подходит отправитель
-         ){
-            // если не подходит ни тот, ни другой - показываем 404
-            abort(404);
-        }
-
-        return view('dashboard.review', ['post_request' => $post_request]);
-
-    }
+   {
+//
+//
+//
+//        $post_request = PostRequest::find($request_id);
+//
+//        if(
+//            $post_request->user_id != \Auth::id() // не подходит отправитель
+//         ){
+//            // если не подходит ни тот, ни другой - показываем 404
+//            abort(404);
+//        }
+//
+//        return view('dashboard.review', ['post_request' => $post_request]);
+//
+   }
 
     /**
      * post method form for creating a new resource.
@@ -36,7 +38,7 @@ class ReviewController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function addReview(Request $request, $request_id)
+    public function addReview(Request $request, $post_id)
     {
 
         $validatedData = $request->validate([
@@ -44,7 +46,7 @@ class ReviewController extends Controller
 
         ]);
 
-        $post_request = PostRequest::find($request_id);
+        $post = Post::find($post_id);
 
 
 
@@ -54,21 +56,23 @@ class ReviewController extends Controller
 
 
 
-        $review->review_score =$request->input('rating'); // $request->request->get('raiting1') ;
+       // $review->review_score =$request->input('rating'); // $request->request->get('raiting1') ;
 
 
         $review->user_id = \Auth::id();
 
 
-        $review->post_request_id = $request_id;
+        $review->post_id = $post_id;
 
 
-       $review->post_id = $post_request->post_id;
+       //$review->post_id = $post_request->post_id;
 
-       $review->post_author_id =  $post_request->post->post_author_id;
+       $review->post_author_id =  $post->post_author_id;
+
+
 
         $review->save();
-        return redirect(route('dashboard.post-requests'));
+        return redirect(route('dashboard.index'));
     }
 
 

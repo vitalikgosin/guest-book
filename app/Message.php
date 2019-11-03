@@ -12,7 +12,7 @@ class Message extends Model
 
 
 
-    public function course_request()
+    public function post_request()
     {
         return $this->belongsTo(Message::class, 'request_id', 'id');
     }

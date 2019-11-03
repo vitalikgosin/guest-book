@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+use App\Post;
 use App\Review;
 
-class CourseController extends Controller
+class PostController extends Controller
 {
     public function index($slug): \Illuminate\View\View
     {
 
-        $coursedata = Course::where('course_slug', $slug)
+        $postdata = Post::where('post_slug', $slug)
             ->where('published', 1)
             ->with('user')
             ->first();
 
 
 
-        if(!$coursedata){ abort(404);}
+        if(!$postdata){ abort(404);}
 
 
 
 
-        $reviews = Review::where('course_id', $coursedata->id)
+        $reviews = Review::where('post_id', $postdata->id)
             ->orderByDesc('created_at')
             ->with('user')
             //->get();
@@ -31,11 +31,11 @@ class CourseController extends Controller
 
 
 
-        $value = Review::where('course_id', $coursedata->id);
+        $value = Review::where('post_id', $postdata->id);
         $reviews_avg =$value->avg('review_score');
 
 
-        return view('course', ['coursedata'=> $coursedata, 'reviews' =>  $reviews,'reviews_avg'=> $reviews_avg ]);
+        return view('post', ['postdata'=> $postdata, 'reviews' =>  $reviews,'reviews_avg'=> $reviews_avg ]);
 
 
     }

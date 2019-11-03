@@ -39,7 +39,8 @@ class IndexController extends Controller
         )->get();
 
 
-        return view('dashboard.requests', ['requests' =>  $postrequests,'postrequests_received' => $postrequests_received]);
+       // return view('dashboard.requests', ['requests' =>  $postrequests,'postrequests_received' => $postrequests_received]);
+        return view('dashboard.requests');
 
 
 
